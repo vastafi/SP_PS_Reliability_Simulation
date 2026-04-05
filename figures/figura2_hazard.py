@@ -1,12 +1,18 @@
+"""
+Figura 2 — Rata de hazard h(k) pentru rețelele SP și PS.
+"""
+
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
+# ── Parametri ─────────────────────────────────────────────────
 K = 9
 N = 3
 M = 2
 
+# ── Funcții model ─────────────────────────────────────────────
 def pmf_sp(k):
     pk = (k + 1) / (K + 1)
     pk0 = k / (K + 1)
@@ -43,14 +49,15 @@ def h_ps(k):
     r = R_ps(k - 1) if k > 0 else 1.0
     return p / r if r > 1e-15 else 0.0
 
+# ── Date ──────────────────────────────────────────────────────
 ks = list(range(K + 1))
 Hsp = [h_sp(k) for k in ks]
 Hps = [h_ps(k) for k in ks]
-
 hsp5 = h_sp(5)
 hps5 = h_ps(5)
 diff = hps5 - hsp5
 
+# ── Figură ────────────────────────────────────────────────────
 plt.rcParams.update({
     'font.size': 12,
     'axes.linewidth': 0.8,
@@ -220,7 +227,7 @@ ax.grid(True)
 
 plt.tight_layout()
 plt.savefig(
-    'figura2_hazard_final.png',
+    'figura2_hazard.png',
     dpi=300,
     bbox_inches='tight',
     facecolor='white'
@@ -229,5 +236,5 @@ plt.close()
 
 print(
     f"figura2_hazard.png salvata | "
-    f"h_sp(5)={hsp5:.4f} | h_ps(5)={hps5:.4f} | Delta={diff:.4f}"
+    f"h_sp(5)={hsp5:.10f} | h_ps(5)={hps5:.10f} | Delta={diff:.10f}"
 )

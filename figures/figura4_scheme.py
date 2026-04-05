@@ -1,3 +1,7 @@
+"""
+Figura 4 — Schema rețelelor Serial-Paralelă (SP) și Paralel-Serială (PS).
+"""
+
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt

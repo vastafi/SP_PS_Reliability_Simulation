@@ -1,17 +1,28 @@
+"""
+Figura 1 — Funcțiile de repartiție F(k), fiabilitate R(k)
+și distribuția punctuală P(X=k) pentru rețelele SP și PS.
+"""
+
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-K=9; N=3; M=2
+# ── Parametri ─────────────────────────────────────────────────
+K=9;
+N=3;
+M=2
 
+# ── Funcții model ─────────────────────────────────────────────
 def pmf_sp(k):
     pk=(k+1)/(K+1); pk0=k/(K+1)
-    if k==0: return 1-(1-pk**N)**M
+    if k==0:
+        return 1-(1-pk**N)**M
     return (1-pk0**N)**M-(1-pk**N)**M
 
 def pmf_ps(k):
     qk=(K-k)/(K+1); qk0=(K-k+1)/(K+1)
-    if k==0: return (1-qk**N)**M
+    if k==0:
+        return (1-qk**N)**M
     return (1-qk**N)**M-(1-qk0**N)**M
 
 def F_sp(k): return 1-(1-((k+1)/(K+1))**N)**M
@@ -19,12 +30,18 @@ def F_ps(k): return (1-((K-k)/(K+1))**N)**M
 def R_sp(k): return 1-F_sp(k)
 def R_ps(k): return 1-F_ps(k)
 
+# ── Date ──────────────────────────────────────────────────────
 ks = list(range(K+1))
-Fsp=[F_sp(k) for k in ks]; Rsp=[R_sp(k) for k in ks]; Psp=[pmf_sp(k) for k in ks]
-Fps=[F_ps(k) for k in ks]; Rps=[R_ps(k) for k in ks]; Pps=[pmf_ps(k) for k in ks]
+Fsp=[F_sp(k) for k in ks];
+Rsp=[R_sp(k) for k in ks];
+Psp=[pmf_sp(k) for k in ks]
+Fps=[F_ps(k) for k in ks];
+Rps=[R_ps(k) for k in ks];
+Pps=[pmf_ps(k) for k in ks]
 mu_sp=sum(k*pmf_sp(k) for k in ks)
 mu_ps=sum(k*pmf_ps(k) for k in ks)
 
+# ── Figură ────────────────────────────────────────────────────
 plt.rcParams.update({'font.size':12,'axes.linewidth':0.8,'grid.alpha':0.3,'grid.linestyle':'--'})
 
 fig, axes = plt.subplots(1, 2, figsize=(13, 5))

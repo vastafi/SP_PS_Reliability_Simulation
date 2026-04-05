@@ -99,8 +99,7 @@ print(f"  PS: ceil({n_PS:,}/{retele_per_fisier:,}) = {math.ceil(n_PS/retele_per_
 # ════════════════════════════════════════════════════════════
 # 4. FISIERELE CSV
 # ════════════════════════════════════════════════════════════
-# Adapteaza calea la directorul tau local
-BASE = "./"  # <-- schimba cu calea catre fisierele tale CSV
+BASE = "./"
 
 FILES = {
     "Python secrets": [
