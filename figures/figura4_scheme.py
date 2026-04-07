@@ -93,7 +93,7 @@ wire(ax,8.0,2.5,8.8,2.5)
 # Eticheta M in serie — jos
 ax.annotate('',xy=(1.2,-0.55),xytext=(8.0,-0.55),
             arrowprops=dict(arrowstyle='<->',color='#717D7E',lw=1.0))
-lbl(ax,4.6,-0.72,'M=2 subretele în serie',fontsize=9,
+lbl(ax,4.6,-0.32,'M=2 subretele în serie',fontsize=9,
     style='italic',color='#717D7E')
 
 # ═══ PANOUL DREAPTA — PS ════════════════════════════════════
@@ -143,10 +143,12 @@ ax2.annotate('',xy=(1.5,-0.2),xytext=(6.6,-0.2),
              arrowprops=dict(arrowstyle='<->',color=CLR_LBL,lw=1.0))
 
 # Eticheta M in paralel — stanga, cu sageata verticala
-ax2.annotate('',xy=(0.4,y2+0.05),xytext=(0.4,y1-0.05),
-             arrowprops=dict(arrowstyle='<->',color='#717D7E',lw=1.0))
-ax2.text(-0.7,2.5,'M=2\nsubretele\nîn paralel',ha='center',va='center',
-         fontsize=8.5,color='#717D7E',style='italic')
+# ax2.annotate('',xy=(0.0004,y2+0.05),xytext=(0.0004,y1-0.05),
+#              arrowprops=dict(arrowstyle='<->',color='#717D7E',lw=1.0))
+ax2.annotate('', xy=(-0.5, y2+0.05), xytext=(-0.5, y1-0.05),
+             arrowprops=dict(arrowstyle='<->', color='#717D7E', lw=1.0))
+ax2.text(-1.3,3.5,'M=2\nsubretele\nîn paralel',ha='center',va='center',
+         fontsize=8.5,color='#717D7E', fontweight='bold', style='italic')
 
 plt.tight_layout()
 plt.savefig('figura4_scheme.png', dpi=300, bbox_inches='tight', facecolor='white')
