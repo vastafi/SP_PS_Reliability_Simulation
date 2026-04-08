@@ -15,31 +15,34 @@ K = 9
 N = 3
 M = 2
 
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE = os.path.dirname(SCRIPT_DIR)
+
 BASE    = "/Users/astafivalentina/PycharmProjects/SP_PS_Reliability_Simulation/"
 FIGURES = BASE + "figures/"
-
 FILES = {
     "Java ThreadLocalRandom": [
-        BASE + "data/java_threadlocal/threadlocal_data1.csv",
-        BASE + "data/java_threadlocal/threadlocal_data2.csv",
-        BASE + "data/java_threadlocal/threadlocal_data3.csv",
-        BASE + "data/java_threadlocal/threadlocal_data4.csv",
-        BASE + "data/java_threadlocal/threadlocal_data5.csv",
+        os.path.join(BASE, "data", "java_threadlocal", "threadlocal_data1.csv"),
+        os.path.join(BASE, "data", "java_threadlocal", "threadlocal_data2.csv"),
+        os.path.join(BASE, "data", "java_threadlocal", "threadlocal_data3.csv"),
+        os.path.join(BASE, "data", "java_threadlocal", "threadlocal_data4.csv"),
+        os.path.join(BASE, "data", "java_threadlocal", "threadlocal_data5.csv"),
     ],
     "Python secrets": [
-        BASE + "data/python_secrets/secrets_data1.csv",
-        BASE + "data/python_secrets/secrets_data2.csv",
-        BASE + "data/python_secrets/secrets_data3.csv",
-        BASE + "data/python_secrets/secrets_data4.csv",
-        BASE + "data/python_secrets/secrets_data5.csv",
+        os.path.join(BASE, "data", "python_secrets", "secrets_data1.csv"),
+        os.path.join(BASE, "data", "python_secrets", "secrets_data2.csv"),
+        os.path.join(BASE, "data", "python_secrets", "secrets_data3.csv"),
+        os.path.join(BASE, "data", "python_secrets", "secrets_data4.csv"),
+        os.path.join(BASE, "data", "python_secrets", "secrets_data5.csv"),
     ],
     "Digits of π": [
-        BASE + "data/pi/pi_digits_part.csv",
-        BASE + "data/pi/pi_digits_part1.csv",
-        BASE + "data/pi/pi_digits_part2.csv",
-        BASE + "data/pi/pi_digits_part3.csv",
-        BASE + "data/pi/pi_digits_part4.csv",
-        BASE + "data/pi/pi_digits_part5.csv",
+        os.path.join(BASE, "data", "pi", "pi_digits_part.csv"),
+        os.path.join(BASE, "data", "pi", "pi_digits_part1.csv"),
+        os.path.join(BASE, "data", "pi", "pi_digits_part2.csv"),
+        os.path.join(BASE, "data", "pi", "pi_digits_part3.csv"),
+        os.path.join(BASE, "data", "pi", "pi_digits_part4.csv"),
+        os.path.join(BASE, "data", "pi", "pi_digits_part5.csv"),
     ],
 }
 
