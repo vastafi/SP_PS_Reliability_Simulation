@@ -73,7 +73,7 @@ for ax, Fv, Rv, title, lF, lR, mu_t, cF, cR, mu_lbl in [
     ax.step(ks, Fv, where='post',
             color=cF, lw=2.2,
             marker='o', ms=5,
-            label=f'{lF} - CDF',
+            label=f'{lF} - Cumulative Distribution Function',
             zorder=4)
 
     ax.step(ks, Rv, where='post',

@@ -139,7 +139,7 @@ for ax_main, ax_diff, net_type, cdf_theoretical, title in plot_specs:
         where='post',
         color='black',
         linewidth=2.4,
-        label='Theoretical CDF',
+        label='Theoretical Cumulative Distribution Function',
         zorder=6
     )
 

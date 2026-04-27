@@ -15,11 +15,7 @@ K = 9
 N = 3
 M = 2
 
-
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-BASE = os.path.dirname(SCRIPT_DIR)
-
-BASE    = "/Users/astafivalentina/PycharmProjects/SP_PS_Reliability_Simulation/"
+BASE = "/Users/astafivalentina/PycharmProjects/SP_PS_Reliability_Simulation/"
 FIGURES = BASE + "figures/"
 FILES = {
     "Java ThreadLocalRandom": [
@@ -162,8 +158,8 @@ fig.suptitle(
 x = np.arange(len(GNPA_ORDER))
 
 for ax, sim_vals, mu_t, eps_t, title, unit, ypad in [
-    (axes[0], SP_SIM, mu_sp, eps_sp, "SP Network", "E[U]", 0.0006),
-    (axes[1], PS_SIM, mu_ps, eps_ps, "PS Network", "E[V]", 0.0003),
+    (axes[0], SP_SIM, mu_sp, eps_sp, "Serial–Parallel Network (SP)", "E[U]", 0.0006),
+    (axes[1], PS_SIM, mu_ps, eps_ps, "Parallel–Serial Network (PS)", "E[V]", 0.0003),
 ]:
     bars = ax.bar(x, sim_vals, color=COLORS, alpha=0.80,
                   width=0.5, edgecolor='black', linewidth=0.7, zorder=3)
@@ -172,7 +168,7 @@ for ax, sim_vals, mu_t, eps_t, title, unit, ypad in [
                label=f'Theoretical value {unit}={mu_t:.4f}')
     ax.axhline(y=mu_t + eps_t, color='red', lw=1.0, ls='--', alpha=0.5)
     ax.axhline(y=mu_t - eps_t, color='red', lw=1.0, ls='--', alpha=0.5,
-               label=f'CLT bound $\\pm\\varepsilon={eps_t:.4f}$')
+               label=f'Central Limit Theorem bound $\\pm\\varepsilon={eps_t:.4f}$')
 
     ax.fill_between([-0.5, len(GNPA_ORDER) - 0.5],
                     [mu_t - eps_t] * 2, [mu_t + eps_t] * 2,

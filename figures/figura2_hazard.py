@@ -167,12 +167,12 @@ legend_handles = [
     Line2D([0], [0], color='#1f77b4', lw=2.8,
            marker='o', markersize=8,
            linestyle='-',
-           label=r'$h_{SP}(k)$ — SP Network'),
+           label=r'$h_{SP}(k)$ — Serial–Parallel Network (SP)'),
 
     Line2D([0], [0], color='#d62728', lw=2.8,
            marker='s', markersize=8,
            linestyle='--',
-           label=r'$h_{PS}(k)$ — PS Network')
+           label=r'$h_{PS}(k)$ — Parallel–Serial Network (PS)')
 ]
 
 ax.legend(handles=legend_handles,

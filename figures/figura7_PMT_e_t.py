@@ -15,7 +15,7 @@ N = 3
 M = 2
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-BASE = os.path.dirname(SCRIPT_DIR)   # scriptul este în /figures
+BASE = os.path.dirname(SCRIPT_DIR)
 
 FILES = {
     "Java ThreadLocalRandom": [
