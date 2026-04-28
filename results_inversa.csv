@@ -1,0 +1,7 @@
+metoda,prng,retea,c_khat,c_var,c_mse,c_pct,c3_khat,c3_var,c3_mse,c3_pct,c5_khat,c5_var,c5_mse,c5_pct
+inversa_cdf,Java ThreadLocalRandom,SP,8.969,0.056,0.057,94.3,9.101,0.4928,0.503,60.4,9.115,0.1018,0.115,88.5
+inversa_cdf,Java ThreadLocalRandom,PS,8.938,0.2262,0.23,77.6,9.051,0.5484,0.551,54.0,9.158,0.139,0.164,84.5
+inversa_cdf,Python secrets,SP,8.963,0.0656,0.067,93.3,9.115,0.4798,0.493,62.8,9.123,0.1079,0.123,87.7
+inversa_cdf,Python secrets,PS,8.934,0.2396,0.244,76.5,9.086,0.5726,0.58,52.6,9.159,0.1337,0.159,84.1
+inversa_cdf,Cifrele lui pi,SP,8.963,0.0696,0.071,92.9,9.087,0.4734,0.481,61.9,9.106,0.0968,0.108,89.5
+inversa_cdf,Cifrele lui pi,PS,8.914,0.2526,0.26,74.0,9.074,0.5725,0.578,52.0,9.166,0.1504,0.178,84.0
