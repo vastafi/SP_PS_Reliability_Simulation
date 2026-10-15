@@ -82,12 +82,27 @@ def simulate_network(digits, net_type, n_samples):
 # 3. ESTIMATORI MLE
 # ════════════════════════════════════════════════════════════════
 
-def mle_complete(lifetimes):
+def mle_complete(lifetimes, net_type, k_max_search=30):
     """
-    MLE pentru date complete.
-    K̂ = max(observații) — estimator consistent pentru dist. uniformă discretă.
+    MLE pentru date complete (CORECTAT).
+    Inainte: K̂ = max(observatii) - acesta NU este EVM-ul duratei de viata a retelei
+    (ar fi EVM doar pentru o singura unitate uniforma). Acum se maximizeaza
+    verosimilitatea (10) prin cautare exhaustiva pe K = max(x), ..., k_max_search.
     """
-    return int(np.max(lifetimes))
+    pmf_fn = pmf_sp if net_type == 'SP' else pmf_ps
+    vals, cnts = np.unique(lifetimes, return_counts=True)
+    best_k, best_ll = int(np.max(lifetimes)), -math.inf
+    for k_try in range(int(np.max(lifetimes)), k_max_search + 1):
+        ll = 0.0
+        for v, c in zip(vals, cnts):
+            p = pmf_fn(int(v), kmax=k_try)
+            if p <= 0:
+                ll = -math.inf
+                break
+            ll += c * math.log(p)
+        if ll > best_ll:
+            best_ll, best_k = ll, k_try
+    return best_k
 
 
 def mle_censored(lifetimes, scheme_bounds, net_type, k_max_search=30):
@@ -112,13 +127,15 @@ def mle_censored(lifetimes, scheme_bounds, net_type, k_max_search=30):
         freqs.append(cnt)
 
     # Căutare K̂ care maximizează log-verosimilitatea multinomială
-    best_k  = int(np.max(lifetimes))
+    best_k  = 1          # CORECTAT: datele cenzurate nu cunosc max(observatii)
     best_ll = -math.inf
 
-    for k_try in range(best_k, k_max_search + 1):
+    for k_try in range(1, k_max_search + 1):
         probs = []
         for i in range(len(bounds) - 1):
             lo, hi = bounds[i], bounds[i + 1]
+            if i == len(bounds) - 2:      # CORECTAT: ultimul interval este [lo, +inf)
+                hi = k_try + 1
             p = sum(pmf_fn(x, kmax=k_try)
                     for x in range(lo, min(hi, k_try + 1)))
             probs.append(p)
@@ -185,7 +202,7 @@ def run_simulations():
             diff     = abs(mean_sim - mu_t)
             in_eps   = diff <= eps_t
 
-            k_c  = mle_complete(lt)
+            k_c  = mle_complete(lt, net_type)   # CORECTAT
             k_c3 = mle_censored(lt, c3, net_type)
             k_c5 = mle_censored(lt, c5, net_type)
 

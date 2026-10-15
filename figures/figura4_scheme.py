@@ -58,19 +58,12 @@ plt.rcParams.update({
     'axes.linewidth': 0
 })
 
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-fig.suptitle(
-    "Figure 4. Structure of Serial–Parallel (SP) and Parallel–Serial (PS) networks\n"
-    "($N=3$ units per subnetwork, $M=2$ subnetworks)",
-    fontsize=12,
-    fontweight='bold',
-    y=1.03
-)
+fig, axes = plt.subplots(1, 2, figsize=(9.0, 3.9))   # CORECTAT: dimensiune de tipar, fara titlu incorporat
 
 # ═══ LEFT PANEL — SP ══════════════════════════════════════════
 ax = axes[0]
-ax.set_xlim(-1.0, 9.5)
-ax.set_ylim(-0.8, 5.8)
+ax.set_xlim(-1.0, 10.1)   # CORECTAT: loc pentru OUT
+ax.set_ylim(-0.8, 6.2)
 ax.axis('off')
 ax.set_title(
     "Serial–Parallel Network (SP)\n"
@@ -82,7 +75,7 @@ ax.set_title(
 
 # IN / OUT
 ax.text(
-    0.0, 2.5, 'IN',
+    0.0, 2.5, 'IN', zorder=10,   # CORECTAT: deasupra firului
     ha='center', va='center',
     fontsize=11,
     fontweight='bold',
@@ -95,7 +88,7 @@ ax.text(
     )
 )
 ax.text(
-    9.2, 2.5, 'OUT',
+    9.55, 2.5, 'OUT', zorder=10,   # CORECTAT: mutat spre dreapta, deasupra firului
     ha='center', va='center',
     fontsize=11,
     fontweight='bold',
@@ -124,8 +117,8 @@ wire(ax, 3.5, 4.0, 3.5, 1.0)
 [junction(ax, 3.5, y) for y in [4.0, 2.5, 1.0]]
 wire(ax, 3.5, 2.5, 4.3, 2.5)
 
-lbl(ax, 2.2, 5.2, 'Subnetwork 1', fontsize=10)
-lbl(ax, 2.2, 4.75, 'N=3 units in parallel', fontsize=8.5)
+lbl(ax, 2.2, 5.7, 'Subnetwork 1', fontsize=10)
+lbl(ax, 2.2, 5.0, 'N=3 units\nin parallel', fontsize=8.5)   # CORECTAT: pe doua randuri
 ax.annotate(
     '',
     xy=(1.2, 4.55),
@@ -149,8 +142,8 @@ wire(ax, 7.3, 4.0, 7.3, 1.0)
 [junction(ax, 7.3, y) for y in [4.0, 2.5, 1.0]]
 wire(ax, 7.3, 2.5, 8.0, 2.5)
 
-lbl(ax, 6.0, 5.2, 'Subnetwork 2', fontsize=10)
-lbl(ax, 6.0, 4.75, 'N=3 units in parallel', fontsize=8.5)
+lbl(ax, 6.0, 5.7, 'Subnetwork 2', fontsize=10)
+lbl(ax, 6.0, 5.0, 'N=3 units\nin parallel', fontsize=8.5)   # CORECTAT: pe doua randuri
 ax.annotate(
     '',
     xy=(5.0, 4.55),
@@ -158,7 +151,7 @@ ax.annotate(
     arrowprops=dict(arrowstyle='<->', color=CLR_LBL, lw=1.0)
 )
 
-wire(ax, 8.0, 2.5, 8.8, 2.5)
+wire(ax, 8.0, 2.5, 9.1, 2.5)
 
 # M in series label
 ax.annotate(
@@ -177,8 +170,8 @@ lbl(
 
 # ═══ RIGHT PANEL — PS ═════════════════════════════════════════
 ax2 = axes[1]
-ax2.set_xlim(-1.5, 9.5)
-ax2.set_ylim(-0.8, 5.8)
+ax2.set_xlim(-3.1, 10.1)   # CORECTAT: loc pentru eticheta M=2 si OUT
+ax2.set_ylim(-0.8, 6.2)
 ax2.axis('off')
 ax2.set_title(
     "Parallel–Serial Network (PS)\n"
@@ -190,7 +183,7 @@ ax2.set_title(
 
 # IN / OUT
 ax2.text(
-    0.0, 2.5, 'IN',
+    0.0, 2.5, 'IN', zorder=10,   # CORECTAT: deasupra firului
     ha='center', va='center',
     fontsize=11,
     fontweight='bold',
@@ -203,7 +196,7 @@ ax2.text(
     )
 )
 ax2.text(
-    9.2, 2.5, 'OUT',
+    9.55, 2.5, 'OUT', zorder=10,   # CORECTAT: mutat spre dreapta, deasupra firului
     ha='center', va='center',
     fontsize=11,
     fontweight='bold',
@@ -256,7 +249,7 @@ for i, xp in enumerate(xpos):
 wire(ax2, 6.6, y2, 7.3, y2)
 wire(ax2, 7.3, y2, 7.3, 2.5)
 wire(ax2, 7.3, 2.5, 8.0, 2.5)
-wire(ax2, 8.0, 2.5, 8.8, 2.5)
+wire(ax2, 8.0, 2.5, 9.1, 2.5)
 
 lbl(ax2, 4.1, 0.45, 'Subnetwork 2', fontsize=10)
 lbl(ax2, 4.1, 0.05, 'N=3 units in series', fontsize=8.5)
@@ -270,14 +263,14 @@ ax2.annotate(
 # M in parallel label
 ax2.annotate(
     '',
-    xy=(-0.5, y2 + 0.05),
-    xytext=(-0.5, y1 - 0.05),
+    xy=(-0.85, y2 + 0.05),     # CORECTAT: sageata mutata spre stanga (nu atinge IN)
+    xytext=(-0.85, y1 - 0.05),
     arrowprops=dict(arrowstyle='<->', color='#717D7E', lw=1.0)
 )
 ax2.text(
-    -1.3, 3.5,
+    -1.1, 2.5,          # CORECTAT: la stanga sagetii, fara suprapunere
     'M=2\nsubnetworks\nin parallel',
-    ha='center',
+    ha='right',
     va='center',
     fontsize=8.5,
     color='#717D7E',
@@ -286,7 +279,9 @@ ax2.text(
 )
 
 plt.tight_layout()
-plt.savefig('figure4_scheme.png', dpi=300, bbox_inches='tight', facecolor='white')
+import os
+OUT_DIR = os.path.dirname(os.path.abspath(__file__))   # figurile se salveaza langa script
+plt.savefig(os.path.join(OUT_DIR, 'Figure1_networks.png'), dpi=600, bbox_inches='tight', facecolor='white')
 plt.close()
 
 print("figure4_scheme.png saved")

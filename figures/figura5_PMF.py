@@ -39,15 +39,7 @@ plt.rcParams.update({
     'grid.linestyle': '--'
 })
 
-fig, axes = plt.subplots(1, 2, figsize=(13, 5))
-
-fig.suptitle(
-    "Figure 5. Point mass functions $P(X=k)$ for the SP and PS networks\n"
-    "($N=3$, $M=2$, $K=9$)",
-    fontsize=12,
-    fontweight='bold',
-    y=1.02
-)
+fig, axes = plt.subplots(1, 2, figsize=(8.6, 3.7))   # CORECTAT: dimensiune de tipar, fara titlu incorporat
 
 for ax, Pv, title, color, label in [
     (axes[0], Psp, "Serial–Parallel Network (SP)", '#66bb6a', '$P(X=k)$'),
@@ -81,9 +73,11 @@ for ax, Pv, title, color, label in [
     ax.spines['right'].set_visible(False)
 
 plt.tight_layout()
+import os
+OUT_DIR = os.path.dirname(os.path.abspath(__file__))   # figurile se salveaza langa script
 plt.savefig(
-    'figure5_PMF.png',
-    dpi=300,
+    os.path.join(OUT_DIR, 'figure5_PMF.png'),
+    dpi=600,
     bbox_inches='tight',
     facecolor='white'
 )

@@ -45,15 +45,7 @@ plt.rcParams.update({
     'grid.linestyle': '--'
 })
 
-fig, axes = plt.subplots(1, 2, figsize=(13, 5))
-
-fig.suptitle(
-    "Figure 1. Distribution functions $F(k)$ and reliability functions $R(k)$\n"
-    "for the SP and PS networks ($N=3$, $M=2$, $K=9$)",
-    fontsize=12,
-    fontweight='bold',
-    y=1.02
-)
+fig, axes = plt.subplots(1, 2, figsize=(8.6, 3.7))   # CORECTAT: dimensiune de tipar, fara titlu incorporat
 
 for ax, Fv, Rv, title, lF, lR, mu_t, cF, cR, mu_lbl in [
 
@@ -73,7 +65,7 @@ for ax, Fv, Rv, title, lF, lR, mu_t, cF, cR, mu_lbl in [
     ax.step(ks, Fv, where='post',
             color=cF, lw=2.2,
             marker='o', ms=5,
-            label=f'{lF} - Cumulative Distribution Function',
+            label=f'{lF} – CDF',
             zorder=4)
 
     ax.step(ks, Rv, where='post',
@@ -89,11 +81,11 @@ for ax, Fv, Rv, title, lF, lR, mu_t, cF, cR, mu_lbl in [
                lw=1.2,
                alpha=0.6)
 
-    ax.text(mu_t + 0.12, 0.96,
+    ax.text(mu_t - 0.12, 0.03 if ax is axes[0] else 1.075,
             f'{mu_lbl}={mu_t:.4f}',
             fontsize=9,
             color='gray',
-            va='top')
+            ha='right', va=('bottom' if ax is axes[0] else 'top'))
 
     ax.set_title(title,
                  fontsize=11,
@@ -107,7 +99,7 @@ for ax, Fv, Rv, title, lF, lR, mu_t, cF, cR, mu_lbl in [
     ax.set_ylim(-0.02, 1.08)
 
     ax.legend(fontsize=9.5,
-              loc='upper left',
+              loc=('center left' if ax is axes[0] else 'center right'),
               framealpha=0.92,
               edgecolor='#cccccc')
 
@@ -117,8 +109,10 @@ for ax, Fv, Rv, title, lF, lR, mu_t, cF, cR, mu_lbl in [
     ax.spines['right'].set_visible(False)
 
 plt.tight_layout()
-plt.savefig('figure1_CDF_R_m.png',
-            dpi=300,
+import os
+OUT_DIR = os.path.dirname(os.path.abspath(__file__))   # figurile se salveaza langa script
+plt.savefig(os.path.join(OUT_DIR, 'Figure2_CDF_R.png'),
+            dpi=600,
             bbox_inches='tight',
             facecolor='white')
 

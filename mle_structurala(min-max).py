@@ -7,15 +7,17 @@ import math, csv
 K_TRUE = 9
 n, R   = 33, 1000
 N_SP, M_SP = 3, 2
-N_PS, M_PS = 2, 3
+N_PS, M_PS = 3, 2      # CORECTAT: PS cu N=3, M=2 (ca in teorie si Fig. 1)
 
 C3 = [(0,4), (4,7), (7, float('inf'))]
 C5 = [(0,5), (5,7), (7,8), (8,9), (9, float('inf'))]
 
+import os
+BASE = os.path.dirname(os.path.abspath(__file__))
 FISIERE = {
-    'Java ThreadLocalRandom': '/Users/astafivalentina/PycharmProjects/SP_PS_Reliability_Simulation/data/java_threadlocal/threadlocal_data1.csv',
-    'Python secrets':          '/Users/astafivalentina/PycharmProjects/SP_PS_Reliability_Simulation/data/python_secrets/secrets_data1.csv',
-    'Cifrele lui pi':          '/Users/astafivalentina/PycharmProjects/SP_PS_Reliability_Simulation/data/pi/pi_digits_part.csv',
+    'Java ThreadLocalRandom': os.path.join(BASE, 'data', 'java_threadlocal', 'threadlocal_data1.csv'),
+    'Python secrets':          os.path.join(BASE, 'data', 'python_secrets', 'secrets_data1.csv'),
+    'Cifrele lui pi':          os.path.join(BASE, 'data', 'pi', 'pi_digits_part.csv'),
 }
 
 OUTPUT_CSV = 'results_structurala.csv'
@@ -27,7 +29,7 @@ def cdf_sp(k, K=9, N=3, M=2):
     if k >= K: return 1.0
     return 1.0 - (1.0 - ((k+1)/(K+1))**N)**M
 
-def cdf_ps(k, K=9, N=2, M=3):
+def cdf_ps(k, K=9, N=3, M=2):   # CORECTAT
     if k < 0: return 0.0
     if k >= K: return 1.0
     return (1.0 - ((K-k)/(K+1))**N)**M
@@ -36,7 +38,7 @@ def pmf_sp(k, K, N=3, M=2):
     if k < 0 or k > K: return 0.0
     return cdf_sp(k,K,N,M) - cdf_sp(k-1,K,N,M)
 
-def pmf_ps(k, K, N=2, M=3):
+def pmf_ps(k, K, N=3, M=2):     # CORECTAT
     if k < 0 or k > K: return 0.0
     return cdf_ps(k,K,N,M) - cdf_ps(k-1,K,N,M)
 
@@ -48,7 +50,7 @@ def sim_SP(cifre, start, n, N=3, M=2):
         date.append(min(max(grup[j*N:j*N+N]) for j in range(M)))
     return date
 
-def sim_PS(cifre, start, n, N=2, M=3):
+def sim_PS(cifre, start, n, N=3, M=2):   # CORECTAT
     date = []
     for i in range(n):
         s = start + i*N*M
@@ -79,8 +81,9 @@ def mle_cenzurat(date, intervale, tip, K_max=30):
         for j,(a,b) in enumerate(intervale):
             p = (1.0-(cdf(a-1,K) if a>0 else 0.0)) if b==float('inf') \
                 else cdf(b-1,K)-(cdf(a-1,K) if a>0 else 0.0)
+            if freq[j] == 0: continue      # CORECTAT: interval gol -> p^0 = 1, nu restrange K
             if p<=0: ok=False; break
-            if freq[j]>0: ll += freq[j]*math.log(p)
+            ll += freq[j]*math.log(p)
         if ok and ll>best_ll:
             best_ll, best_K = ll, K
     return best_K

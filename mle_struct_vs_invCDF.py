@@ -67,7 +67,7 @@ def print_comparatie(ds, di):
                 pct_s = rs[f'{schema}_pct']
                 pct_i = ri[f'{schema}_pct']
 
-                delta_mse = mse_i - mse_s   # pozitiv = structurala mai buna
+                delta_mse = mse_i - mse_s   # ΔMSE = MSE(inversa) - MSE(structurala): NEGATIV = inversa mai buna
                 delta_pct = pct_i - pct_s   # pozitiv = inversa mai buna
 
                 if mse_s < mse_i:

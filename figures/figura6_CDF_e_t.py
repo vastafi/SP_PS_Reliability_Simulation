@@ -116,17 +116,12 @@ plt.rcParams.update({
 
 fig, axes = plt.subplots(
     2, 2,
-    figsize=(14, 8),
+    figsize=(8.8, 5.6),   # CORECTAT: dimensiune de tipar
     gridspec_kw={'height_ratios': [3, 1]}
 )
 
-fig.suptitle(
-    "Figure 6. Empirical vs theoretical CDF for the SP and PS networks\n"
-    "for the three PRNG sources ($N=3$, $M=2$, $K=9$)",
-    fontsize=12,
-    fontweight='bold',
-    y=0.98
-)
+# CORECTAT: titlul incorporat a fost eliminat
+DIFF_PANELS = []   # pentru scala comuna a panourilor de deviatie
 
 plot_specs = [
     (axes[0, 0], axes[1, 0], 'SP', cdf_sp_theoretical, "Serial–Parallel Network (SP)"),
@@ -139,15 +134,17 @@ for ax_main, ax_diff, net_type, cdf_theoretical, title in plot_specs:
         where='post',
         color='black',
         linewidth=2.4,
-        label='Theoretical Cumulative Distribution Function',
+        label='Theoretical CDF',
         zorder=6
     )
 
     max_abs_diff = 0.0
+    n_networks = None
 
     for source_name, file_list in FILES.items():
         digits = load_digits(file_list)
         sim_values = simulate_network(digits, net_type)
+        n_networks = len(sim_values) if n_networks is None else min(n_networks, len(sim_values))
         cdf_emp = empirical_cdf(sim_values)
         diff = cdf_emp - cdf_theoretical
 
@@ -197,13 +194,18 @@ for ax_main, ax_diff, net_type, cdf_theoretical, title in plot_specs:
     ax_main.set_xticks(ks)
     ax_main.set_ylim(-0.02, 1.02)
     ax_main.grid(True, zorder=0)
-    ax_main.legend(fontsize=8.5, loc='lower right', framealpha=0.92, edgecolor='#cccccc')
+    ax_main.legend(fontsize=8.5, loc=('upper left' if net_type == 'SP' else 'lower right'),
+                   framealpha=0.92, edgecolor='#cccccc')
     ax_main.spines['top'].set_visible(False)
     ax_main.spines['right'].set_visible(False)
 
     ax_diff.axhline(0, color='black', linewidth=1.0)
-    lim = max(1e-4, 1.15 * max_abs_diff)
-    ax_diff.set_ylim(-lim, lim)
+    # CORECTAT: banda de esantionare 95% (+-1.96*sqrt(F(1-F)/n)) si scala comuna (Recenzentul 1)
+    band = 1.96 * np.sqrt(cdf_theoretical * (1 - cdf_theoretical) / n_networks)
+    ax_diff.fill_between(ks, -band, band, step='post', color='gray', alpha=0.18,
+                         label='95% sampling band', zorder=1)
+    ax_diff.legend(fontsize=8, loc='lower left', framealpha=0.92, edgecolor='#cccccc')
+    DIFF_PANELS.append((ax_diff, max(max_abs_diff, band.max())))
     ax_diff.set_xticks(ks)
     ax_diff.set_xlabel('$k$', fontsize=12)
     ax_diff.set_ylabel('$\\Delta F$', fontsize=11)
@@ -211,10 +213,15 @@ for ax_main, ax_diff, net_type, cdf_theoretical, title in plot_specs:
     ax_diff.spines['top'].set_visible(False)
     ax_diff.spines['right'].set_visible(False)
 
-plt.tight_layout(rect=[0, 0, 1, 0.94])
+lim = 1.15 * max(m for _, m in DIFF_PANELS)        # CORECTAT: aceeasi scala pentru SP si PS
+for a, _ in DIFF_PANELS:
+    a.set_ylim(-lim, lim)
+plt.tight_layout()
+import os
+OUT_DIR = os.path.dirname(os.path.abspath(__file__))   # figurile se salveaza langa script
 plt.savefig(
-    'figure6_CDF_e_vs_t.png',
-    dpi=300,
+    os.path.join(OUT_DIR, 'Figure5_ECDF.png'),
+    dpi=600,
     bbox_inches='tight',
     facecolor='white'
 )

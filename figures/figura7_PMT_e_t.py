@@ -127,15 +127,7 @@ plt.rcParams.update({
     'grid.linestyle': '--'
 })
 
-fig, axes = plt.subplots(1, 2, figsize=(14, 5.5))
-
-fig.suptitle(
-    "Figure 7. Empirical vs theoretical PMF for the SP and PS networks\n"
-    "for the three PRNG sources ($N=3$, $M=2$, $K=9$)",
-    fontsize=12,
-    fontweight='bold',
-    y=1.02
-)
+fig, axes = plt.subplots(1, 2, figsize=(8.8, 3.9))   # CORECTAT: dimensiune de tipar, fara titlu incorporat
 
 plot_specs = [
     (axes[0], 'SP', pmf_sp_theoretical, "Serial–Parallel Network (SP)", "$P(U=k)$"),
@@ -178,16 +170,18 @@ for ax, net_type, pmf_theoretical, title, prob_label in plot_specs:
     ax.set_xlabel('$k$', fontsize=12)
     ax.set_ylabel('Probability', fontsize=12)
     ax.set_xticks(ks)
-    ax.set_ylim(0, max(np.max(pmf_sp_theoretical), np.max(pmf_ps_theoretical)) * 1.15)
+    ax.set_ylim(0, max(np.max(pmf_sp_theoretical), np.max(pmf_ps_theoretical)) * 1.6)   # CORECTAT: loc pentru legenda
     ax.grid(True, zorder=0)
     ax.legend(fontsize=8.5, loc='upper right', framealpha=0.92, edgecolor='#cccccc')
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
 
 plt.tight_layout()
+import os
+OUT_DIR = os.path.dirname(os.path.abspath(__file__))   # figurile se salveaza langa script
 plt.savefig(
-    'figure7_PMF_e_vs_t.png',
-    dpi=300,
+    os.path.join(OUT_DIR, 'figure7_PMF_e_vs_t.png'),
+    dpi=600,
     bbox_inches='tight',
     facecolor='white'
 )

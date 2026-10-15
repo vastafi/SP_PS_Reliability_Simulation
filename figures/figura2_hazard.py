@@ -66,7 +66,7 @@ plt.rcParams.update({
     'grid.linestyle': '--'
 })
 
-fig, ax = plt.subplots(figsize=(10, 6))
+fig, ax = plt.subplots(figsize=(7.4, 4.3))   # CORECTAT: dimensiune de tipar
 
 # Step curves
 ax.step(ks, Hsp, where='post',
@@ -97,11 +97,11 @@ ax.annotate(
 )
 
 ax.text(
-    x_delta - 0.28, (hsp5 + hps5) / 2,
+    x_delta + 0.12, 0.37,          # CORECTAT: la dreapta sagetii, in zona libera
     rf'$\Delta = {diff:.4f}$',
     fontsize=11,
     color='#2ca02c',
-    ha='right',
+    ha='left',
     va='center',
     bbox=dict(
         boxstyle='round,pad=0.22',
@@ -145,12 +145,7 @@ ax.annotate(
 )
 
 # Title and axes
-ax.set_title(
-    "Figure 2. Hazard rate $h(k)$ for the SP and PS networks\n"
-    "($N=3$, $M=2$, $K=9$)",
-    fontsize=16,
-    fontweight='bold'
-)
+# CORECTAT: titlul incorporat a fost eliminat (titlul figurii este in manuscris)
 
 ax.set_xlabel(r'$k$', fontsize=14)
 ax.set_ylabel(r'$h(k)$', fontsize=14)
@@ -184,9 +179,11 @@ ax.legend(handles=legend_handles,
 ax.grid(True)
 
 plt.tight_layout()
+import os
+OUT_DIR = os.path.dirname(os.path.abspath(__file__))   # figurile se salveaza langa script
 plt.savefig(
-    'figure2_hazard.png',
-    dpi=300,
+    os.path.join(OUT_DIR, 'Figure3_hazard.png'),
+    dpi=600,
     bbox_inches='tight',
     facecolor='white'
 )

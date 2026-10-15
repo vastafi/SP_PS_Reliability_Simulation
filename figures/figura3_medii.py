@@ -15,8 +15,8 @@ K = 9
 N = 3
 M = 2
 
-BASE = "/Users/astafivalentina/PycharmProjects/SP_PS_Reliability_Simulation/"
-FIGURES = BASE + "figures/"
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # CORECTAT: cale relativa
+FIGURES = os.path.join(BASE, "figures") + os.sep
 FILES = {
     "Java ThreadLocalRandom": [
         os.path.join(BASE, "data", "java_threadlocal", "threadlocal_data1.csv"),
@@ -147,13 +147,7 @@ plt.rcParams.update({
     'grid.linestyle': '--',
 })
 
-fig, axes = plt.subplots(1, 2, figsize=(13, 5))
-fig.suptitle(
-    "Figure 3. Simulated means vs theoretical values with CLT error bounds\n"
-    "for the three PRNG sources ($N=3$, $M=2$, $K=9$, "
-    "$\\varepsilon_{rel}=0.1\\%$)",
-    fontsize=12, fontweight='bold', y=1.02,
-)
+fig, axes = plt.subplots(1, 2, figsize=(8.8, 3.9))   # CORECTAT: dimensiune de tipar, fara titlu incorporat
 
 x = np.arange(len(GNPA_ORDER))
 
@@ -176,7 +170,7 @@ for ax, sim_vals, mu_t, eps_t, title, unit, ypad in [
 
     for bar, val in zip(bars, sim_vals):
         ax.text(bar.get_x() + bar.get_width() / 2,
-                val + ypad, f'{val:.6f}',
+                max(val, mu_t + eps_t) + 0.25 * eps_t, f'{val:.6f}',   # CORECTAT: deasupra benzii +-eps
                 ha='center', va='bottom',
                 fontsize=8.5, fontweight='bold')
 
@@ -196,8 +190,8 @@ for ax, sim_vals, mu_t, eps_t, title, unit, ypad in [
                 max(sim_vals) + 8 * eps_t)
 
 plt.tight_layout()
-out = FIGURES + "figure3_means.png"
-plt.savefig(out, dpi=300, bbox_inches='tight', facecolor='white')
+out = FIGURES + "Figure4_means.png"
+plt.savefig(out, dpi=600, bbox_inches='tight', facecolor='white')
 plt.close()
 
 print("figure3_means.png saved")
