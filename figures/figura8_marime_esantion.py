@@ -1,8 +1,6 @@
 """
 Figure 6 (NOU) — Percentage of exact estimates K_hat = 9 versus the sample size n
-(complete data, inverse CDF method, R = 1000), with the exact benchmark and its 95% band.
-Datele provin din run_experiments.py (results/results_v2.json, cheia E4 -> n).
-Acelasi stil ca figurile existente (figura1..figura6).
+(complete data, inverse CDF method, R = 1000), with the reference benchmark and its 95% band.
 """
 import os
 import json
@@ -30,7 +28,7 @@ for ax, net, title in [(axes[0], 'SP', "Serial–Parallel Network (SP)"),
     b = np.array([E4n[str(m)][net]['benchmark']['exact'] for m in ns]) / 100
     half = 1.96 * np.sqrt(b * (1 - b) / 1000)
     ax.fill_between(ns, 100 * (b - half), 100 * np.minimum(b + half, 1), color='gray', alpha=0.18,
-                    label='Exact benchmark ± 95% band', zorder=1)
+                    label='Benchmark ± 95% band', zorder=1)
     ax.plot(ns, 100 * b, color='black', lw=2.0, zorder=2)
     for j, (g, c, mk) in enumerate(zip(GNPA, COLORS, MARKERS)):
         ax.plot(np.array(ns) * (1 + (j - 1) * 0.03),
