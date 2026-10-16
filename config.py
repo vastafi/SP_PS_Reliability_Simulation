@@ -1,6 +1,5 @@
 """
 Configurare centralizată: parametri model, căi fișiere, funcții teoretice.
-Importat de toate celelalte scripturi.
 """
 
 import math
@@ -47,11 +46,9 @@ GNPA_LABELS = ["Java\nThreadLocalRandom", "Python\nsecrets", "Cifrele\nlui π"]
 COLORS      = ['#1f77b4', '#ff7f0e', '#2ca02c']
 
 # ── Scheme censurare ──────────────────────────────────────────
-C3_SP = [0, 4, 7, K + 1]        # [0,4), [4,7), [7,+inf)
-C3_PS = [0, 3, 6, K + 1]        # [0,3), [3,6), [6,+inf)
-
-C5_SP = [0, 4, 6, 7, 8, K + 1]  # [0,4), [4,6), [6,7), [7,8), [8,+inf)
-C5_PS = [0, 3, 5, 7, 8, K + 1]  # [0,3), [3,5), [5,7), [7,8), [8,+inf)
+# CORECTAT: aceleasi scheme ca in articol si in scripturile MLE, pentru ambele retele
+C3_SP = C3_PS = [0, 4, 7, K + 1]          # [0,4), [4,7), [7,+inf)
+C5_SP = C5_PS = [0, 5, 7, 8, 9, K + 1]    # [0,5), [5,7), [7,8), [8,9), [9,+inf)
 
 
 # ── Funcții model teoretic ────────────────────────────────────

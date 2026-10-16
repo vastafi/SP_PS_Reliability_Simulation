@@ -37,8 +37,10 @@ def pmf_ps(k, K=9):
     if k==0: return (1-qk**N)**M
     return (1-qk**N)**M-(1-qk0**N)**M
 
-def F_sp(k, K=9): return 1-(1-((k+1)/(K+1))**N)**M
-def F_ps(k, K=9): return (1-((K-k)/(K+1))**N)**M
+def F_sp(k, K=9):   # CORECTAT: F=0 pentru k<0 si F=1 pentru k>=K (necesar cand K < limita intervalului)
+    return 0.0 if k < 0 else (1.0 if k >= K else 1-(1-((k+1)/(K+1))**N)**M)
+def F_ps(k, K=9):
+    return 0.0 if k < 0 else (1.0 if k >= K else (1-((K-k)/(K+1))**N)**M)
 def R_sp(k, K=9): return 1-F_sp(k,K)
 def R_ps(k, K=9): return 1-F_ps(k,K)
 def h_sp(k, K=9):
@@ -177,7 +179,7 @@ def mle_censored(data, intervals, F_func, K_max=30):
     for a,b in intervals:
         if b is None: counts.append(int(np.sum(data>=a)))
         else: counts.append(int(np.sum((data>=a)&(data<b))))
-    Km=int(intervals[-1][0]); best_K,best_ll=Km,-np.inf
+    Km=1; best_K,best_ll=Km,-np.inf   # CORECTAT: K nu este restrans de limita ultimului interval
     for Kt in range(Km, K_max+1):
         ll=0; ok=True
         for (a,b),cnt in zip(intervals,counts):
@@ -190,10 +192,9 @@ def mle_censored(data, intervals, F_func, K_max=30):
         if ok and ll>best_ll: best_ll,best_K=ll,Kt
     return best_K
 
-INT_SP_C3=[(0,4),(4,7),(7,None)]
-INT_SP_C5=[(0,4),(4,6),(6,7),(7,8),(8,None)]
-INT_PS_C3=[(0,3),(3,6),(6,None)]
-INT_PS_C5=[(0,3),(3,5),(5,7),(7,8),(8,None)]
+# CORECTAT: schemele din articol, aceleasi pentru SP si PS
+INT_SP_C3=INT_PS_C3=[(0,4),(4,7),(7,None)]
+INT_SP_C5=INT_PS_C5=[(0,5),(5,7),(7,8),(8,9),(9,None)]
 
 # ════════════════════════════════════════════════════════════
 # 7. CALCULE PRINCIPALE
